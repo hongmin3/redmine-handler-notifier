@@ -1,0 +1,15 @@
+.env
+config.ini
+activity_state.json
+runtime/
+logs/
+preview*.json
+scheduler-backup/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Legacy local mailer contains machine-specific authentication state.
+redmine_activity_mailer.py
