@@ -1,0 +1,14 @@
+{
+  "domain": "default",
+  "knowledge": [
+    {
+      "path": "knowledge",
+      "namespace": "REF",
+      "untagged": "derive"
+    }
+  ],
+  "learnings": "akela/LEARNINGS.md",
+  "runs": ".akela/runs",
+  "activities": ["notification-failure", "config-change", "scheduler-recovery"],
+  "compiler": {}
+}

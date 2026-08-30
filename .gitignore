@@ -13,3 +13,5 @@ venv/
 
 # Legacy local mailer contains machine-specific authentication state.
 redmine_activity_mailer.py
+.akela/
+akela/.cache/
