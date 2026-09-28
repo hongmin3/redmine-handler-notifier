@@ -9,6 +9,39 @@
   ],
   "learnings": "akela/LEARNINGS.md",
   "runs": ".akela/runs",
-  "activities": ["notification-failure", "config-change", "scheduler-recovery"],
-  "compiler": {}
+  "activities": [
+    "notification-failure",
+    "config-change",
+    "scheduler-recovery"
+  ],
+  "compiler": {
+    "scope": {
+      "REF-overview#purpose": {
+        "add": [
+          "notification-failure",
+          "config-change",
+          "scheduler-recovery"
+        ]
+      },
+      "REF-overview#notification-flow": {
+        "add": [
+          "notification-failure",
+          "config-change"
+        ]
+      },
+      "REF-overview#modules": {
+        "add": [
+          "config-change",
+          "notification-failure"
+        ]
+      },
+      "REF-troubleshooting#general-checklist": {
+        "add": [
+          "notification-failure",
+          "scheduler-recovery",
+          "config-change"
+        ]
+      }
+    }
+  }
 }
