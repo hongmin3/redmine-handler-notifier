@@ -69,7 +69,7 @@ def load_json(path: Path) -> dict[str, Any]:
     if not path.exists():
         return {}
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
+        return json.loads(path.read_text(encoding="utf-8-sig"))
     except (OSError, json.JSONDecodeError):
         return {}
 
@@ -243,12 +243,25 @@ def weekly_issue_blocks(groups: dict[str, list[dict[str, Any]]], base_url: str) 
 
 
 def split_blocks(blocks: list[str], max_chars: int) -> list[str]:
+    if max_chars < 1:
+        raise ValueError("TEAMS_MAX_CHARS must be positive")
     chunks: list[str] = []
     current: list[str] = []
     size = 0
     separator = "\n\n---\n\n"
     for block in blocks:
-        block = block[:max_chars]
+        if len(block) > max_chars:
+            if current:
+                chunks.append(separator.join(current))
+                current, size = [], 0
+            while len(block) > max_chars:
+                boundary = block.rfind("\n", 0, max_chars) + 1
+                boundary = boundary or max_chars
+                chunks.append(block[:boundary])
+                block = block[boundary:]
+            if block:
+                chunks.append(block)
+            continue
         projected = size + len(block) + (len(separator) if current else 0)
         if current and projected > max_chars:
             chunks.append(separator.join(current))
@@ -279,7 +292,11 @@ def teams_payload(title: str, summary: str, content: str, page: int, total: int)
 
 def send_payloads(webhook_url: str, payloads: list[dict[str, Any]], timeout: int) -> None:
     for payload in payloads:
-        response = requests.post(webhook_url, json=payload, timeout=timeout)
+        try:
+            response = requests.post(webhook_url, json=payload, timeout=timeout)
+        except requests.RequestException:
+            # Request exceptions include the URL, which may contain webhook credentials.
+            raise RuntimeError("Teams webhook request failed (network or timeout)") from None
         if response.status_code not in {200, 202}:
             raise RuntimeError(f"Teams webhook failed with HTTP {response.status_code}")
 

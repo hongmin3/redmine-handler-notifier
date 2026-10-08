@@ -1,0 +1,11 @@
+[Unit]
+Description=Redmine daily notification at 10:00 Korea time
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 10:00:00 Asia/Seoul
+Persistent=true
+AccuracySec=1s
+Unit=redmine-notifier@daily.service
+
+[Install]
+WantedBy=timers.target

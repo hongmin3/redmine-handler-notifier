@@ -1,0 +1,22 @@
+[Unit]
+Description=Redmine Handler notifier (%i)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=@RUN_USER@
+WorkingDirectory=@PROJECT_DIR@
+Environment=NOTIFICATION_CONTROL_FILE=@PROJECT_DIR@/runtime/notification_control.json
+Environment=REDMINE_STATE_FILE=@PROJECT_DIR@/runtime/state.json
+Environment=REDMINE_LOG_FILE=@PROJECT_DIR@/logs/redmine_notifier.log
+Environment=PYTHONUNBUFFERED=1
+EnvironmentFile=-@PROJECT_DIR@/runtime/teams-webhook.env
+ExecStart=@PROJECT_DIR@/.venv/bin/python @PROJECT_DIR@/scripts/run_scheduled.py %i
+TimeoutStartSec=3h
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=@PROJECT_DIR@/runtime @PROJECT_DIR@/logs

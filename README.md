@@ -2,6 +2,28 @@
 
 Redmine의 Open 이슈를 현재 담당자(Handler) 중심으로 정리해 Microsoft Teams로 전달하는 자동화입니다.
 
+예를 들어 평일에는 새로 변경된 이슈를, 월요일에는 담당자별 전체 목록을 같은 Teams 채널에 알려줍니다. 운영 예약은 공용 Linux 서버에 있으며 PC 예약 작업은 비활성화되어 있습니다.
+
+## 빠른 시작
+
+Python 3과 requirements.txt의 패키지, Redmine API 접근, Teams 전송 흐름, Linux 서버의 systemd·flock이 필요합니다. 비밀 설정은 배포 폴더의 .env에 별도로 준비하고 저장소에 넣지 않습니다.
+
+```sh
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python redmine_notifier.py daily --dry-run
+```
+
+기본은 OFF입니다. 운영 서버에서 ON을 적용한 뒤 드라이런하면 전송 없이 대상 목록을 확인합니다.
+
+```sh
+.venv/bin/python scripts/set_notification_state.py on
+.venv/bin/python redmine_notifier.py daily --dry-run
+sudo sh scripts/install_server.sh ubuntu
+```
+
+설치기는 평일 10:00과 월요일 13:30 한국 시간의 timer를 활성화합니다. 전송 실패는 15분 후 재시도하며 최초 시도 포함 최대 4회 실행합니다. 서버 배포·복구·상태 확인은 [운영 문서](docs/OPERATIONS_REVIEW.md)를 참고하세요.
+
 ## 핵심 기능
 
 - 평일 일일 알림: 마지막 성공 시점 이후 변경된 Open 이슈 요약
@@ -46,9 +68,9 @@ python redmine_notifier.py daily
 python redmine_notifier.py weekly
 ```
 
-## Windows 작업 스케줄러
+## Windows 작업 스케줄러 (대체 운영 방식)
 
-기존 작업을 XML로 백업한 뒤 평일 10시 일일 작업과 월요일 13시 30분 주간 작업을 등록합니다.
+공용서버와 동시에 켜면 중복 알림이 발생합니다. Windows에서만 운영할 때 기존 작업을 XML로 백업한 뒤 평일 10시 일일 작업과 월요일 13시 30분 주간 작업을 등록합니다.
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\install_scheduled_tasks.ps1

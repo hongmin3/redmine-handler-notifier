@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="generator" content="botyard render-spec-html v6">
-<meta name="spec-html-renderer" content="v6">
-<meta name="spec-source-sha256" content="3ad89ec48bdf1bbc7e4d22f717efe1f144dbdfa9f4f0e132be45a1092291e6e4">
+<meta name="generator" content="botyard render-spec-html v7">
+<meta name="spec-html-renderer" content="v7">
+<meta name="spec-source-sha256" content="251a2b62a702844d060bb86b0f9a959a7e20c229ba1ad38ef2dab22a917e8132">
 <title>Redmine Handler Notifier 사양서</title>
 <style>:root{--bg:#f7f8fa;--panel:#fff;--text:#1d2330;--muted:#5d6678;--line:#e2e6ee;--accent:#2f6fde;--code:#f1f3f7;
 --req:#2f6fde;--nfr:#8a4fd8;--test:#15907a;--draft:#8a93a6;--implemented:#c98a12;--verified:#1f9d55;--deprecated:#c2413a;--active:#2f6fde;
@@ -16,8 +16,8 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font:15px/1.7 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR","Segoe UI",sans-serif;word-break:keep-all;overflow-wrap:break-word}
 a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
-code{font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--code);border-radius:4px;padding:.1em .35em}
-pre{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow:auto}pre code{background:none;padding:0}
+code{font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--code);border-radius:4px;padding:.1em .35em;overflow-wrap:anywhere}
+pre{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}pre code{background:none;padding:0}
 .top{background:var(--panel);border-bottom:1px solid var(--line);padding:24px 32px}
 .top h1{margin:0 0 12px;font-size:26px;line-height:1.3}
 .chips,.stats{display:flex;flex-wrap:wrap;gap:8px}.chips{margin-bottom:14px}
@@ -26,7 +26,7 @@ pre{background:var(--code);border:1px solid var(--line);border-radius:8px;paddin
 .stat{border:1px solid var(--line);border-radius:10px;padding:8px 14px;min-width:96px;background:var(--bg)}
 .stat b{display:block;font-size:22px;line-height:1.2}.stat span{font-size:12px;color:var(--muted)}
 .stat.st-draft b{color:var(--draft)}.stat.st-implemented b{color:var(--implemented)}.stat.st-verified b{color:var(--verified)}.stat.st-deprecated b{color:var(--deprecated)}
-.layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:28px;max-width:1280px;margin:0 auto;padding:24px 32px}
+.layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:20px;max-width:1800px;margin:0 auto;padding:24px 24px}
 .toc{position:sticky;top:16px;align-self:start;max-height:calc(100vh - 32px);overflow:auto;font-size:13px}
 .toc input{width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--text);margin-bottom:10px;font:inherit}
 .toc ul{list-style:none;margin:0;padding:0}.toc li{margin:1px 0}.toc a{display:block;padding:2px 8px;border-radius:6px;color:var(--text)}
@@ -41,6 +41,7 @@ main{min-width:0}
 .card{padding:4px 20px 12px}.card p,.card li{max-width:46em}.card p{margin:.4em 0 .9em;line-height:1.85}
 .field{display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:0 18px;border-top:1px solid var(--line);padding:10px 0 2px}
 .field>h4,.field>h5,.field>h6{margin:.15em 0 0;font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.02em}
+.field-body{min-width:0}
 .field-body>:first-child{margin-top:0}.field-body>:last-child{margin-bottom:.4em}
 .field-body ol{list-style:none;counter-reset:step;padding-left:0}
 .field-body ol>li{counter-increment:step;position:relative;padding-left:2.1em;margin:.45em 0}
@@ -56,13 +57,15 @@ p.why{color:var(--muted);border-left:3px solid var(--line);padding-left:10px}.wh
 .idtag{font:600 13px/1.4 ui-monospace,Menlo,Consolas,monospace;background:var(--req);color:#fff;border-radius:6px;padding:2px 8px}
 .kind-nfr .idtag{background:var(--nfr)}.kind-test .idtag{background:var(--test)}
 .idref{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;white-space:nowrap}
+td .idref,.meta .idref{white-space:normal;overflow-wrap:anywhere}td .badge{max-width:100%;white-space:normal;overflow-wrap:anywhere}
 .idtag,.badge{white-space:nowrap}
-.card-meta{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:13px;margin:2px 0 6px}
+.card-meta{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;justify-items:start;font-size:13px;margin:2px 0 6px}
+.meta{min-width:0;max-width:100%;overflow-wrap:anywhere}
 .meta b{color:var(--muted);font-weight:600;margin-right:4px}
 details.history{font-size:13px;margin:4px 0 8px}details.history summary{cursor:pointer;color:var(--muted)}
 details.history ul{margin:6px 0;padding-left:18px}.hist{color:var(--muted);font-size:12px}
 tr.group th{background:var(--bg);text-align:left;font-size:14px;padding-top:12px}.gcode{font:600 12px/1.4 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--line);border-radius:6px;padding:1px 7px;margin-right:4px}
-table.index td:first-child{white-space:nowrap}table.index td:nth-child(2){min-width:10em}table.index td:nth-child(4){min-width:13em}.untitled{color:var(--muted);font-style:italic}
+table.index th:nth-child(1){width:16%}table.index th:nth-child(2){width:24%}table.index th:nth-child(3){width:12%}table.index th:nth-child(4){width:24%}table.index th:nth-child(5){width:24%}.untitled{color:var(--muted);font-style:italic}
 .toc .toc-id span{font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;color:var(--text)}
 .toc a.active{background:var(--code);color:var(--accent);font-weight:600;box-shadow:inset 3px 0 0 var(--accent)}.toc a.in-chapter{color:var(--accent)}
 figure.flow{margin:12px 0;overflow-x:auto}figure.flow svg{display:block;max-width:100%;height:auto;margin:0 auto}
@@ -73,23 +76,24 @@ figure.flow{margin:12px 0;overflow-x:auto}figure.flow svg{display:block;max-widt
 .nohist{color:var(--muted)}
 main img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:8px;background:#fff}
 .table-wrap{overflow-x:auto;margin:10px 0}
-table{border-collapse:collapse;width:100%;font-size:14px}th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+table{border-collapse:collapse;width:100%;table-layout:fixed;font-size:14px}th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
 th{background:var(--code);font-weight:600}
 .badge{display:inline-block;border-radius:999px;padding:0 10px;font-size:12px;font-weight:600;color:#fff;background:var(--draft)}
 .st-implemented.badge{background:var(--implemented)}.st-verified.badge{background:var(--verified)}.st-deprecated.badge{background:var(--deprecated)}.st-active.badge{background:var(--active)}
 blockquote{margin:10px 0;padding:4px 16px;border-left:4px solid var(--line);color:var(--muted)}
 li.task{list-style:none;margin-left:-1.2em}
 hr{border:0;border-top:1px solid var(--line);margin:20px 0}
-footer{max-width:1280px;margin:0 auto;padding:8px 32px 40px;color:var(--muted);font-size:13px}
+footer{max-width:1800px;margin:0 auto;padding:8px 24px 40px;color:var(--muted);font-size:13px}
 .hidden{display:none}
 @media (max-width:860px){.field{grid-template-columns:1fr}.layout{grid-template-columns:1fr;padding:16px}.toc{position:static;max-height:260px}.top{padding:18px 16px}.chapter{padding:2px 14px 12px}footer{padding:8px 16px 32px}}
+@media screen and (max-width:600px){table.responsive,table.responsive tbody,table.responsive tr,table.responsive td{display:block;width:100%}table.responsive thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}table.responsive tr{margin-bottom:12px;border:1px solid var(--line);border-radius:6px}table.responsive td{border:0;border-top:1px solid var(--line)}table.responsive td::before{content:attr(data-label);display:block;font-size:12px;font-weight:600;color:var(--muted)}table.responsive tr.group th{display:block;width:100%;border:0}.card{padding:4px 12px 12px}}
 @media print{.toc,footer{display:none}.layout{display:block;padding:0}.chapter{break-inside:auto;border:0}.card{break-inside:avoid}body{background:#fff}}</style>
 </head>
 <body>
 <header class="top">
 <h1>Redmine Handler Notifier 사양서</h1>
-<div class="chips"><span class="chip"><span>Document Version</span><b>0.1.0</b></span><span class="chip"><span>Last Updated</span><b>2026-09-21</b></span><span class="chip"><span>Status</span><b>draft — 기존 계약 일부의 근거 기반 사양화</b></span></div>
-<div class="stats"><div class="stat"><b>3</b><span>기능 요구사항 REQ</span></div><div class="stat"><b>0</b><span>비기능 NFR</span></div><div class="stat"><b>3</b><span>테스트 TEST</span></div><div class="stat st-implemented"><b>3</b><span>implemented</span></div></div>
+<div class="chips"><span class="chip"><span>Document Version</span><b>0.2.0</b></span><span class="chip"><span>Last Updated</span><b>2026-10-08</b></span><span class="chip"><span>Status</span><b><span class="badge st-implemented">implemented</span></b></span></div>
+<div class="stats"><div class="stat"><b>9</b><span>기능 요구사항 REQ</span></div><div class="stat"><b>1</b><span>비기능 NFR</span></div><div class="stat"><b>5</b><span>테스트 TEST</span></div><div class="stat st-implemented"><b>10</b><span>implemented</span></div></div>
 </header>
 <div class="layout">
 <nav class="toc" aria-label="목차">
@@ -97,73 +101,239 @@ footer{max-width:1280px;margin:0 auto;padding:8px 32px 40px;color:var(--muted);f
 <ul><li class="toc-2"><a href="#feature-index">기능 목록</a></li>
 <li class="toc-2"><a href="#sec-1">1. 목적</a></li>
 <li class="toc-2"><a href="#sec-2">2. 프로젝트 범위</a></li>
+<li class="toc-2"><a href="#sec-4">4. 실행 구성</a></li>
 <li class="toc-2"><a href="#sec-5">5. 기능 요구사항</a></li>
 <li class="toc-id kind-req"><a href="#REQ-CORE-001">REQ-CORE-001 <span>기본 OFF</span></a></li>
 <li class="toc-id kind-req"><a href="#REQ-CORE-002">REQ-CORE-002 <span>성공 시점 overlap</span></a></li>
 <li class="toc-id kind-req"><a href="#REQ-CORE-003">REQ-CORE-003 <span>블록 분할</span></a></li>
+<li class="toc-id kind-req"><a href="#REQ-QUERY-001">REQ-QUERY-001 <span>전체 Open 조회</span></a></li>
+<li class="toc-id kind-req"><a href="#REQ-DAILY-001">REQ-DAILY-001 <span>변경 알림과 성공 기록</span></a></li>
+<li class="toc-id kind-req"><a href="#REQ-WEEKLY-001">REQ-WEEKLY-001 <span>담당자별 목록</span></a></li>
+<li class="toc-id kind-req"><a href="#REQ-DELIVERY-001">REQ-DELIVERY-001 <span>Teams 전송 결과</span></a></li>
+<li class="toc-id kind-req"><a href="#REQ-OPS-001">REQ-OPS-001 <span>공용서버 자동실행</span></a></li>
+<li class="toc-id kind-req"><a href="#REQ-OPS-002">REQ-OPS-002 <span>PC 예약 작업 중지</span></a></li>
+<li class="toc-2"><a href="#sec-8">8. 비기능 요구사항</a></li>
+<li class="toc-id kind-nfr"><a href="#NFR-SECURITY-001">NFR-SECURITY-001 <span>비밀정보와 운영 기록 보호</span></a></li>
 <li class="toc-2"><a href="#sec-9">9. 오류 처리 정책</a></li>
 <li class="toc-2"><a href="#sec-11">11. 테스트 사양</a></li>
 <li class="toc-id kind-test"><a href="#TEST-CORE-001">TEST-CORE-001</a></li>
 <li class="toc-id kind-test"><a href="#TEST-CORE-002">TEST-CORE-002</a></li>
 <li class="toc-id kind-test"><a href="#TEST-CORE-003">TEST-CORE-003</a></li>
+<li class="toc-id kind-test"><a href="#TEST-OPS-001">TEST-OPS-001 <span>서버 일정과 실행</span></a></li>
+<li class="toc-id kind-test"><a href="#TEST-OPS-002">TEST-OPS-002 <span>PC 중지 확인</span></a></li>
 <li class="toc-2"><a href="#sec-12">12. 요구사항 추적성</a></li>
 <li class="toc-2"><a href="#sec-13">13. 미확정 사항</a></li></ul>
 </nav>
 <main>
 <section class="chapter" id="feature-index">
 <h2>기능 목록</h2>
-<div class="table-wrap"><table class="index">
+<div class="table-wrap"><table class="index responsive">
 <thead><tr><th>ID</th><th>이름</th><th>상태</th><th>구현</th><th>테스트</th></tr></thead>
 <tbody>
-<tr class="group"><th colspan="5"><span class="gcode">CORE</span></th></tr>
-<tr><td><a class="idref" href="#REQ-CORE-001">REQ-CORE-001</a></td><td>기본 OFF</td><td><span class="badge st-implemented">implemented</span></td><td><code>redmine_notifier.py</code></td><td><a class="idref" href="#TEST-CORE-001">TEST-CORE-001</a>: <code>tests/test_redmine_notifier.py</code></td></tr>
-<tr><td><a class="idref" href="#REQ-CORE-002">REQ-CORE-002</a></td><td>성공 시점 overlap</td><td><span class="badge st-implemented">implemented</span></td><td><code>redmine_notifier.py</code></td><td><a class="idref" href="#TEST-CORE-002">TEST-CORE-002</a>: <code>tests/test_redmine_notifier.py</code></td></tr>
-<tr><td><a class="idref" href="#REQ-CORE-003">REQ-CORE-003</a></td><td>블록 분할</td><td><span class="badge st-implemented">implemented</span></td><td><code>redmine_notifier.py</code></td><td><a class="idref" href="#TEST-CORE-003">TEST-CORE-003</a>: <code>tests/test_redmine_notifier.py</code></td></tr>
+<tr class="group"><th colspan="5"><span class="gcode">CORE</span> 알림 제어와 메시지 구성</th></tr>
+<tr><td data-label="ID"><a class="idref" href="#REQ-CORE-001">REQ-CORE-001</a></td><td data-label="이름">기본 OFF</td><td data-label="상태"><span class="badge st-implemented">implemented</span></td><td data-label="구현"><code>redmine_notifier.py</code></td><td data-label="테스트"><a class="idref" href="#TEST-CORE-001">TEST-CORE-001</a>: <code>tests/test_redmine_notifier.py</code></td></tr>
+<tr><td data-label="ID"><a class="idref" href="#REQ-CORE-002">REQ-CORE-002</a></td><td data-label="이름">성공 시점 overlap</td><td data-label="상태"><span class="badge st-implemented">implemented</span></td><td data-label="구현"><code>redmine_notifier.py</code></td><td data-label="테스트"><a class="idref" href="#TEST-CORE-002">TEST-CORE-002</a>: <code>tests/test_redmine_notifier.py</code></td></tr>
+<tr><td data-label="ID"><a class="idref" href="#REQ-CORE-003">REQ-CORE-003</a></td><td data-label="이름">블록 분할</td><td data-label="상태"><span class="badge st-implemented">implemented</span></td><td data-label="구현"><code>redmine_notifier.py</code></td><td data-label="테스트"><a class="idref" href="#TEST-CORE-003">TEST-CORE-003</a>: <code>tests/test_redmine_notifier.py</code></td></tr>
+<tr class="group"><th colspan="5"><span class="gcode">QUERY</span> 전체 이슈 조회</th></tr>
+<tr><td data-label="ID"><a class="idref" href="#REQ-QUERY-001">REQ-QUERY-001</a></td><td data-label="이름">전체 Open 조회</td><td data-label="상태"><span class="badge st-implemented">implemented</span></td><td data-label="구현"><code>redmine_notifier.py</code></td><td data-label="테스트"><code>tests/test_cli.py</code></td></tr>
+<tr class="group"><th colspan="5"><span class="gcode">DAILY</span> 일일 알림</th></tr>
+<tr><td data-label="ID"><a class="idref" href="#REQ-DAILY-001">REQ-DAILY-001</a></td><td data-label="이름">변경 알림과 성공 기록</td><td data-label="상태"><span class="badge st-implemented">implemented</span></td><td data-label="구현"><code>redmine_notifier.py</code></td><td data-label="테스트"><code>tests/test_cli.py</code></td></tr>
+<tr class="group"><th colspan="5"><span class="gcode">WEEKLY</span> 주간 알림</th></tr>
+<tr><td data-label="ID"><a class="idref" href="#REQ-WEEKLY-001">REQ-WEEKLY-001</a></td><td data-label="이름">담당자별 목록</td><td data-label="상태"><span class="badge st-implemented">implemented</span></td><td data-label="구현"><code>redmine_notifier.py</code></td><td data-label="테스트"><code>tests/test_redmine_notifier.py</code>, <code>tests/test_cli.py</code></td></tr>
+<tr class="group"><th colspan="5"><span class="gcode">DELIVERY</span> Teams 전송</th></tr>
+<tr><td data-label="ID"><a class="idref" href="#REQ-DELIVERY-001">REQ-DELIVERY-001</a></td><td data-label="이름">Teams 전송 결과</td><td data-label="상태"><span class="badge st-implemented">implemented</span></td><td data-label="구현"><code>redmine_notifier.py</code></td><td data-label="테스트"><code>tests/test_cli.py</code></td></tr>
+<tr class="group"><th colspan="5"><span class="gcode">OPS</span> 서버 자동실행과 PC 중지</th></tr>
+<tr><td data-label="ID"><a class="idref" href="#REQ-OPS-001">REQ-OPS-001</a></td><td data-label="이름">공용서버 자동실행</td><td data-label="상태"><span class="badge st-implemented">implemented</span></td><td data-label="구현"><code>scripts/install_server.sh</code>, <code>scripts/run_scheduled.py</code>, <code>deploy/systemd/redmine-notifier@.service</code>, <code>deploy/systemd/redmine-notifier-daily.timer</code>, <code>deploy/systemd/redmine-notifier-weekly.timer</code></td><td data-label="테스트"><code>tests/test_scheduled_runner.py</code>, <a class="idref" href="#TEST-OPS-001">TEST-OPS-001</a></td></tr>
+<tr><td data-label="ID"><a class="idref" href="#REQ-OPS-002">REQ-OPS-002</a></td><td data-label="이름">PC 예약 작업 중지</td><td data-label="상태"><span class="badge st-implemented">implemented</span></td><td data-label="구현"><code>scripts/disable_local_tasks.ps1</code></td><td data-label="테스트"><a class="idref" href="#TEST-OPS-002">TEST-OPS-002</a></td></tr>
+<tr class="group"><th colspan="5"><span class="gcode">NFR SECURITY</span> 비밀정보와 운영 기록 보호</th></tr>
+<tr><td data-label="ID"><a class="idref" href="#NFR-SECURITY-001">NFR-SECURITY-001</a></td><td data-label="이름">비밀정보와 운영 기록 보호</td><td data-label="상태"><span class="badge st-implemented">implemented</span></td><td data-label="구현"><code>redmine_notifier.py</code>, <code>scripts/install_server.sh</code>, <code>scripts/set_server_webhook.py</code></td><td data-label="테스트"><code>tests/test_cli.py</code>, <code>tests/test_server_webhook.py</code>, <a class="idref" href="#TEST-OPS-001">TEST-OPS-001</a></td></tr>
 </tbody>
 </table></div>
 </section>
-<p>기존 코드와 테스트의 명시적 약속을 처음으로 연결한 제한된 기준선이다. 전체 제품 사양이나 운영 검증 완료를 뜻하지 않는다. 기존 약속과 구현의 차이는 SPEC / CODE MISMATCH로 남기고 코드에 맞춰 약속을 바꾸지 않는다.</p>
+<p>기존 알림 계약을 유지하면서 공용서버 자동실행을 추가한다. 2026-10-08 사용자가 현재 프로젝트와 Teams 채널 그대로 서버 ON 운영을 요청했다. 전송 요청 접수, 채널 수신, 예약 실행은 각각 확인한다.</p>
 <section class="chapter" id="sec-1">
 <h2>1. 목적</h2>
 <p>Open 이슈를 담당자별로 정리해 알림으로 전달한다.</p>
+<h3>한눈에 보기</h3>
+<figure class="flow">
+<svg viewBox="0 0 247 532" width="247" height="532" role="img" aria-label="예약 시각 → ON 확인, ON 확인 → Redmine 조회, Redmine 조회 → 목록 정리, 목록 정리 → Teams 전송, Teams 전송 → 성공 기록, ON 확인 → 건너뜀 기록, Redmine 조회 → 실패 기록, 실패 기록 → 예약 재시도, Teams 전송 → 실패 기록, 실패 기록 → 예약 재시도">
+<defs><marker id="flow-arrow-1" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z"/></marker></defs>
+<path class="edge" d="M123.5 44 L123.5 88" marker-end="url(#flow-arrow-1)"/>
+<path class="edge" d="M123.5 124 L63 168" marker-end="url(#flow-arrow-1)"/>
+<path class="edge" d="M63 204 L123.5 248" marker-end="url(#flow-arrow-1)"/>
+<path class="edge" d="M123.5 284 L123.5 328" marker-end="url(#flow-arrow-1)"/>
+<path class="edge" d="M123.5 364 L69.5 408" marker-end="url(#flow-arrow-1)"/>
+<path class="edge" d="M123.5 124 L190.5 168" marker-end="url(#flow-arrow-1)"/><text class="elabel" x="157" y="146">OFF</text>
+<path class="edge" d="M63 204 L177.5 408" marker-end="url(#flow-arrow-1)"/><text class="elabel" x="120.3" y="306">실패</text>
+<path class="edge" d="M177.5 444 L123.5 488" marker-end="url(#flow-arrow-1)"/>
+<path class="edge" d="M123.5 364 L177.5 408" marker-end="url(#flow-arrow-1)"/><text class="elabel" x="150.5" y="386">실패</text>
+<path class="edge" d="M177.5 444 L123.5 488" marker-end="url(#flow-arrow-1)"/>
+<g class="node"><rect x="81.5" y="8" width="84" height="36" rx="8"/><text x="123.5" y="26">예약 시각</text></g>
+<g class="node"><rect x="87" y="88" width="73" height="36" rx="8"/><text x="123.5" y="106">ON 확인</text></g>
+<g class="node"><rect x="8" y="168" width="110" height="36" rx="8"/><text x="63" y="186">Redmine 조회</text></g>
+<g class="node"><rect x="81.5" y="248" width="84" height="36" rx="8"/><text x="123.5" y="266">목록 정리</text></g>
+<g class="node"><rect x="76" y="328" width="95" height="36" rx="8"/><text x="123.5" y="346">Teams 전송</text></g>
+<g class="node"><rect x="27.5" y="408" width="84" height="36" rx="8"/><text x="69.5" y="426">성공 기록</text></g>
+<g class="node"><rect x="142" y="168" width="97" height="36" rx="8"/><text x="190.5" y="186">건너뜀 기록</text></g>
+<g class="node"><rect x="135.5" y="408" width="84" height="36" rx="8"/><text x="177.5" y="426">실패 기록</text></g>
+<g class="node"><rect x="75" y="488" width="97" height="36" rx="8"/><text x="123.5" y="506">예약 재시도</text></g>
+</svg>
+</figure>
+<div class="table-wrap"><table>
+<thead><tr><th>용어</th><th>뜻</th></tr></thead>
+<tbody>
+<tr><td>Handler</td><td>현재 이슈를 다음 단계로 진행할 담당자</td></tr>
+<tr><td>BOM</td><td>일부 Windows 프로그램이 UTF-8 파일 앞에 붙이는 표시</td></tr>
+<tr><td>systemd</td><td>Linux의 서비스·예약 실행 관리자</td></tr>
+</tbody>
+</table></div>
 </section>
 <section class="chapter" id="sec-2">
 <h2>2. 프로젝트 범위</h2>
-<p>포함: 알림 기본 상태·일간 조회 시작점·메시지 분할.</p>
-<p>제외: 운영 데이터·비밀 설정의 열람/변경, 기능 수정, 인증·배포·예약 실행 변경. 이 제외는 작업 경계이며 기존 제품 기능을 제거한다는 뜻이 아니다.</p>
+<p>포함: 일일 변경 알림, 주간 담당자별 목록, ON/OFF, 전체 페이지 조회, Teams 전송, 공용서버 자동실행과 PC 예약 작업 중지.</p>
+<p>제외: Redmine의 담당자·상태 자동 변경과 별도 메일러. 비밀 설정은 출력하지 않으며 배포 시 파일 그대로 전달한다. 기존 성공 기록은 보존한다.</p>
+</section>
+<section class="chapter" id="sec-4">
+<h2>4. 실행 구성</h2>
+<div class="table-wrap"><table class="responsive">
+<thead><tr><th>작업</th><th>시각·시간대</th><th>위치·조건</th><th>기록·알림</th></tr></thead>
+<tbody>
+<tr><td data-label="작업">일일</td><td data-label="시각·시간대">평일 10:00 Asia/Seoul</td><td data-label="위치·조건">공용 Linux 서버, ON</td><td data-label="기록·알림">runtime 성공 상태·logs, Teams</td></tr>
+<tr><td data-label="작업">주간</td><td data-label="시각·시간대">월요일 13:30 Asia/Seoul</td><td data-label="위치·조건">공용 Linux 서버, ON</td><td data-label="기록·알림">logs, Teams</td></tr>
+</tbody>
+</table></div>
 </section>
 <section class="chapter" id="sec-5">
 <h2>5. 기능 요구사항</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>카테고리</th><th>이름</th></tr></thead>
+<tbody>
+<tr><td>CORE</td><td>알림 제어와 메시지 구성</td></tr>
+<tr><td>QUERY</td><td>전체 이슈 조회</td></tr>
+<tr><td>DAILY</td><td>일일 알림</td></tr>
+<tr><td>WEEKLY</td><td>주간 알림</td></tr>
+<tr><td>DELIVERY</td><td>Teams 전송</td></tr>
+<tr><td>OPS</td><td>서버 자동실행과 PC 중지</td></tr>
+<tr><td>SECURITY</td><td>비밀정보와 운영 기록 보호</td></tr>
+</tbody>
+</table></div>
 <section class="card kind-req" id="REQ-CORE-001">
 <h3><span class="idtag">REQ-CORE-001</span> 기본 OFF</h3>
-<div class="card-meta"><span class="badge st-implemented">implemented</span><span class="meta"><b>구현</b> <code>redmine_notifier.py</code></span><span class="meta"><b>테스트</b> <a class="idref" href="#TEST-CORE-001">TEST-CORE-001</a>: <code>tests/test_redmine_notifier.py</code></span><span class="meta"><b>참조됨</b> <a class="idref" href="#TEST-CORE-001">TEST-CORE-001</a></span><span class="meta nohist"><b>변경 이력</b> CHANGELOG에 이 ID로 기록된 변경 없음</span></div>
-<p>명시적 환경변수 override가 없고 알림 제어 파일도 없으면 notifications_enabled는 거짓을 반환한다. 제어 파일의 enabled=true는 활성화로 해석한다.</p>
-<p>관련 구현: <code>redmine_notifier.py</code>. 관련 테스트: <code>tests/test_redmine_notifier.py</code>의 <code>test_notifications_default_to_off</code>.</p>
+<div class="card-meta"><span class="badge st-implemented">implemented</span><span class="meta"><b>구현</b> <code>redmine_notifier.py</code></span><span class="meta"><b>테스트</b> <a class="idref" href="#TEST-CORE-001">TEST-CORE-001</a>: <code>tests/test_redmine_notifier.py</code></span><span class="meta"><b>참조됨</b> <a class="idref" href="#TEST-CORE-001">TEST-CORE-001</a></span></div>
+<details class="history"><summary>변경 이력 1</summary>
+<ul>
+<li><span class="hist">2026-10-08</span> <a class="idref" href="#REQ-CORE-001">REQ-CORE-001</a>: Windows PowerShell에서 만든 <span class="term" title="일부 Windows 프로그램이 UTF-8 파일 앞에 붙이는 표시" tabindex="0">BOM</span> 포함 ON 파일을 정상적으로 읽도록 수정했다.</li>
+</ul>
+</details>
+<p>환경변수 지정이 없고 알림 제어 파일도 없으면 notifications_enabled는 거짓을 반환한다. 제어 파일의 enabled=true는 <span class="term" title="일부 Windows 프로그램이 UTF-8 파일 앞에 붙이는 표시" tabindex="0">BOM</span> 유무와 관계없이 활성화로 해석한다. 손상된 파일은 OFF로 처리한다.</p>
+<p>NOTIFICATIONS_ENABLED 환경변수가 제어 파일보다 우선한다. OFF면 조회와 전송을 건너뛰고 로그를 남긴다.</p>
 </section>
 <section class="card kind-req" id="REQ-CORE-002">
 <h3><span class="idtag">REQ-CORE-002</span> 성공 시점 overlap</h3>
 <div class="card-meta"><span class="badge st-implemented">implemented</span><span class="meta"><b>구현</b> <code>redmine_notifier.py</code></span><span class="meta"><b>테스트</b> <a class="idref" href="#TEST-CORE-002">TEST-CORE-002</a>: <code>tests/test_redmine_notifier.py</code></span><span class="meta"><b>참조됨</b> <a class="idref" href="#TEST-CORE-002">TEST-CORE-002</a></span><span class="meta nohist"><b>변경 이력</b> CHANGELOG에 이 ID로 기록된 변경 없음</span></div>
-<p>별도 lookback override 없이 2시간 전 성공시각이 있으면 daily_since는 마지막 성공시각에서 5분을 뺀 시각을 반환한다.</p>
-<p>관련 구현: <code>redmine_notifier.py</code>. 관련 테스트: <code>tests/test_redmine_notifier.py</code>의 <code>test_daily_since_uses_previous_success_with_overlap</code>.</p>
+<p>별도 조회 기간 지정 없이 2시간 전 성공시각이 있으면 daily_since는 마지막 성공시각에서 5분을 뺀 시각을 반환한다. 조회 시작은 최대 7일 전까지로 제한한다. 성공 기록이 없으면 월요일은 72시간, 다른 요일은 24시간 전부터 조회한다.</p>
 </section>
 <section class="card kind-req" id="REQ-CORE-003">
 <h3><span class="idtag">REQ-CORE-003</span> 블록 분할</h3>
-<div class="card-meta"><span class="badge st-implemented">implemented</span><span class="meta"><b>구현</b> <code>redmine_notifier.py</code></span><span class="meta"><b>테스트</b> <a class="idref" href="#TEST-CORE-003">TEST-CORE-003</a>: <code>tests/test_redmine_notifier.py</code></span><span class="meta"><b>참조됨</b> <a class="idref" href="#TEST-CORE-003">TEST-CORE-003</a></span><span class="meta nohist"><b>변경 이력</b> CHANGELOG에 이 ID로 기록된 변경 없음</span></div>
+<div class="card-meta"><span class="badge st-implemented">implemented</span><span class="meta"><b>구현</b> <code>redmine_notifier.py</code></span><span class="meta"><b>테스트</b> <a class="idref" href="#TEST-CORE-003">TEST-CORE-003</a>: <code>tests/test_redmine_notifier.py</code></span><span class="meta"><b>참조됨</b> <a class="idref" href="#TEST-CORE-003">TEST-CORE-003</a></span></div>
+<details class="history"><summary>변경 이력 1</summary>
+<ul>
+<li><span class="hist">2026-10-08</span> <a class="idref" href="#REQ-CORE-003">REQ-CORE-003</a>: 제한보다 긴 담당자 목록도 모든 문자를 보존해 나눠 보낸다.</li>
+</ul>
+</details>
 <p>메시지 블록을 합칠 때 길이 제한을 넘는다면 별도 메시지로 분리한다. 길이 8인 두 블록과 제한 10의 입력은 두 블록을 각각 보존해 반환한다.</p>
-<p>관련 구현: <code>redmine_notifier.py</code>. 관련 테스트: <code>tests/test_redmine_notifier.py</code>의 <code>test_split_blocks_respects_limit</code>.</p>
+<p>블록 하나가 제한보다 길어도 뒷부분을 버리지 않는다. 줄 경계에서 우선 나누며 긴 한 줄도 모든 문자를 보존한다. 제한은 1 이상의 정수여야 한다.</p>
+</section>
+<section class="card kind-req" id="REQ-QUERY-001">
+<h3><span class="idtag">REQ-QUERY-001</span> 전체 Open 조회</h3>
+<div class="card-meta"><span class="badge st-implemented">implemented</span><span class="meta"><b>구현</b> <code>redmine_notifier.py</code></span><span class="meta"><b>테스트</b> <code>tests/test_cli.py</code></span></div>
+<details class="history"><summary>변경 이력 1</summary>
+<ul>
+<li><span class="hist">2026-10-08</span> <a class="idref" href="#REQ-QUERY-001">REQ-QUERY-001</a>, <a class="idref" href="#REQ-DAILY-001">REQ-DAILY-001</a>, <a class="idref" href="#REQ-WEEKLY-001">REQ-WEEKLY-001</a>, <a class="idref" href="#REQ-DELIVERY-001">REQ-DELIVERY-001</a>: 전체 조회와 성공 기록, 드라이런·실패·중복 제외를 실제 CLI 회귀 테스트에 연결했다.</li>
+</ul>
+</details>
+<p>Redmine API에 Open 조건을 전달하고 total_count와 offset으로 모든 페이지를 조회한다. API 키는 헤더에 넣는다. 제한시간을 지정하고 GET 연결·응답 실패와 HTTP 429/500/502/503/504는 최대 3회 재시도한다.</p>
+</section>
+<section class="card kind-req" id="REQ-DAILY-001">
+<h3><span class="idtag">REQ-DAILY-001</span> 변경 알림과 성공 기록</h3>
+<div class="card-meta"><span class="badge st-implemented">implemented</span><span class="meta"><b>구현</b> <code>redmine_notifier.py</code></span><span class="meta"><b>테스트</b> <code>tests/test_cli.py</code></span></div>
+<details class="history"><summary>변경 이력 1</summary>
+<ul>
+<li><span class="hist">2026-10-08</span> <a class="idref" href="#REQ-QUERY-001">REQ-QUERY-001</a>, <a class="idref" href="#REQ-DAILY-001">REQ-DAILY-001</a>, <a class="idref" href="#REQ-WEEKLY-001">REQ-WEEKLY-001</a>, <a class="idref" href="#REQ-DELIVERY-001">REQ-DELIVERY-001</a>: 전체 조회와 성공 기록, 드라이런·실패·중복 제외를 실제 CLI 회귀 테스트에 연결했다.</li>
+</ul>
+</details>
+<p>이슈 번호와 수정 시각이 이전 전송 기록에 있는 항목은 제외한다. 번호·제목·상태·<span class="term" title="현재 이슈를 다음 단계로 진행할 담당자" tabindex="0">Handler</span>·Grade·수정일·링크를 알린다. 모든 전송이 성공하면 성공 시각과 전송 항목을 저장한다. 대상이 없어도 조회가 성공하면 시각을 저장한다.</p>
+<p>드라이런과 실패는 성공 상태를 갱신하지 않는다. --lookback-hours는 조회 기간을 지정한다.</p>
+</section>
+<section class="card kind-req" id="REQ-WEEKLY-001">
+<h3><span class="idtag">REQ-WEEKLY-001</span> 담당자별 목록</h3>
+<div class="card-meta"><span class="badge st-implemented">implemented</span><span class="meta"><b>구현</b> <code>redmine_notifier.py</code></span><span class="meta"><b>테스트</b> <code>tests/test_redmine_notifier.py</code>, <code>tests/test_cli.py</code></span></div>
+<details class="history"><summary>변경 이력 1</summary>
+<ul>
+<li><span class="hist">2026-10-08</span> <a class="idref" href="#REQ-QUERY-001">REQ-QUERY-001</a>, <a class="idref" href="#REQ-DAILY-001">REQ-DAILY-001</a>, <a class="idref" href="#REQ-WEEKLY-001">REQ-WEEKLY-001</a>, <a class="idref" href="#REQ-DELIVERY-001">REQ-DELIVERY-001</a>: 전체 조회와 성공 기록, 드라이런·실패·중복 제외를 실제 CLI 회귀 테스트에 연결했다.</li>
+</ul>
+</details>
+<p>전체 Open 이슈를 <span class="term" title="현재 이슈를 다음 단계로 진행할 담당자" tabindex="0">Handler</span>별로 정리하며 제외 Grade 기본값은 D다. 담당자 미지정을 먼저 표시하고 14일 이상·30일 이상 미변경을 구분한다. 보류 항목은 그룹 안에서 뒤에 둔다.</p>
+</section>
+<section class="card kind-req" id="REQ-DELIVERY-001">
+<h3><span class="idtag">REQ-DELIVERY-001</span> Teams 전송 결과</h3>
+<div class="card-meta"><span class="badge st-implemented">implemented</span><span class="meta"><b>구현</b> <code>redmine_notifier.py</code></span><span class="meta"><b>테스트</b> <code>tests/test_cli.py</code></span></div>
+<details class="history"><summary>변경 이력 1</summary>
+<ul>
+<li><span class="hist">2026-10-08</span> <a class="idref" href="#REQ-QUERY-001">REQ-QUERY-001</a>, <a class="idref" href="#REQ-DAILY-001">REQ-DAILY-001</a>, <a class="idref" href="#REQ-WEEKLY-001">REQ-WEEKLY-001</a>, <a class="idref" href="#REQ-DELIVERY-001">REQ-DELIVERY-001</a>: 전체 조회와 성공 기록, 드라이런·실패·중복 제외를 실제 CLI 회귀 테스트에 연결했다.</li>
+</ul>
+</details>
+<p>Adaptive Card를 Power Automate/Teams Webhook으로 전달한다. HTTP 200/202는 요청 접수 성공으로 처리한다. 다른 응답과 요청 실패는 비정상 종료 코드와 로그를 남긴다.</p>
+<aside class="callout callout-warn"><span class="callout-label">주의</span>
+<p>요청 접수와 Teams 수신은 별도 확인한다. 여러 메시지 중 일부를 전송하고 실패하면 재시도에서 중복될 수 있다.</p>
+</aside>
+</section>
+<section class="card kind-req" id="REQ-OPS-001">
+<h3><span class="idtag">REQ-OPS-001</span> 공용서버 자동실행</h3>
+<div class="card-meta"><span class="badge st-implemented">implemented</span><span class="meta"><b>구현</b> <code>scripts/install_server.sh</code>, <code>scripts/run_scheduled.py</code>, <code>deploy/systemd/redmine-notifier@.service</code>, <code>deploy/systemd/redmine-notifier-daily.timer</code>, <code>deploy/systemd/redmine-notifier-weekly.timer</code></span><span class="meta"><b>테스트</b> <code>tests/test_scheduled_runner.py</code>, <a class="idref" href="#TEST-OPS-001">TEST-OPS-001</a></span></div>
+<details class="history"><summary>변경 이력 1</summary>
+<ul>
+<li><span class="hist">2026-10-08</span> <a class="idref" href="#REQ-OPS-001">REQ-OPS-001</a>: 공용서버의 독립 폴더에 배포하고 한국 시간의 일일·주간 예약, 공유 잠금, 시도당 30분 제한과 최대 4회 실행을 추가했다.</li>
+</ul>
+</details>
+<p>독립 폴더·가상환경에서 평일 10:00 일일, 월요일 13:30 주간 작업을 실행한다. 일정은 Asia/Seoul이며 로그인 없이 서버 부팅 후에도 예약된다. 놓친 일정은 부팅 후 실행한다. 서버 전체 시간대와 다른 서비스는 변경하지 않는다.</p>
+<p>실패 시 15분 간격으로 최초 실행 외 최대 3회 재시도한다. 시도당 제한은 30분이다. 일일·주간 작업은 같은 잠금을 사용한다. 잠금 충돌은 실패로 기록하고 재시도한다.</p>
+</section>
+<section class="card kind-req" id="REQ-OPS-002">
+<h3><span class="idtag">REQ-OPS-002</span> PC 예약 작업 중지</h3>
+<div class="card-meta"><span class="badge st-implemented">implemented</span><span class="meta"><b>구현</b> <code>scripts/disable_local_tasks.ps1</code></span><span class="meta"><b>테스트</b> <a class="idref" href="#TEST-OPS-002">TEST-OPS-002</a></span></div>
+<details class="history"><summary>변경 이력 1</summary>
+<ul>
+<li><span class="hist">2026-10-08</span> <a class="idref" href="#REQ-OPS-002">REQ-OPS-002</a>: 해당 PC 작업 두 개를 XML 백업한 뒤 중지·비활성화했다.</li>
+</ul>
+</details>
+<p>현재 프로젝트의 두 작업만 XML 백업 후 중지·비활성화한다. 실행 경로와 인수가 이 프로젝트와 맞는지 확인한다. 권한이 없으면 실패로 보고한다. 복구를 위해 작업 정의를 남긴다.</p>
+</section>
+</section>
+<section class="chapter" id="sec-8">
+<h2>8. 비기능 요구사항</h2>
+<section class="card kind-nfr" id="NFR-SECURITY-001">
+<h3><span class="idtag">NFR-SECURITY-001</span> 비밀정보와 운영 기록 보호</h3>
+<div class="card-meta"><span class="badge st-implemented">implemented</span><span class="meta"><b>구현</b> <code>redmine_notifier.py</code>, <code>scripts/install_server.sh</code>, <code>scripts/set_server_webhook.py</code></span><span class="meta"><b>테스트</b> <code>tests/test_cli.py</code>, <code>tests/test_server_webhook.py</code>, <a class="idref" href="#TEST-OPS-001">TEST-OPS-001</a></span></div>
+<details class="history"><summary>변경 이력 1</summary>
+<ul>
+<li><span class="hist">2026-10-08</span> <a class="idref" href="#NFR-SECURITY-001">NFR-SECURITY-001</a>: 새 Teams 흐름의 Webhook을 보호 파일로 연결했다. 요청 실패 로그에서 비밀 URL이 노출되지 않도록 했다.</li>
+</ul>
+</details>
+<p>.env/config.ini는 출력하거나 Git에 넣지 않는다. 배포에 필요한 .env는 파일 그대로 전달하고 서버 소유자만 읽게 한다. 새 Webhook은 표준 입력으로 받아 runtime/teams-webhook.env에 소유자만 읽도록 저장한다. 이 파일은 서비스 환경변수로 적용한다. 기존 성공 기록을 초기화하지 않는다. API 키와 Webhook URL을 로그에 넣지 않는다. 로그는 1MB 단위로 이전 파일 5개를 보관한다.</p>
 </section>
 </section>
 <section class="chapter" id="sec-9">
 <h2>9. 오류 처리 정책</h2>
-<p>알림 OFF는 정상적인 건너뜀 상태다. 실제 전송 실패와 성공 상태 기록은 이번 문서 작업에서 실행 검증하지 않는다. 기존 운영 state/control 및 예약 작업을 변경하지 않는다.</p>
+<p>OFF와 조회 대상 없음은 정상 종료다. 조회·전송 실패는 종료 코드 1이다. 실패와 드라이런을 성공 기록으로 저장하지 않는다.</p>
 </section>
 <section class="chapter" id="sec-11">
 <h2>11. 테스트 사양</h2>
 <p>운영 .env/config.ini/runtime은 읽지 않는다. 제어 파일 fixture는 TemporaryDirectory 안에 생성한다. 환경변수 NOTIFICATIONS_ENABLED가 테스트 기본값 판정에 간섭하지 않는 격리 환경을 사용한다.</p>
 <p>개발 의존성을 준비하고 프로젝트 루트에서 실행할 명령:</p>
-<pre><code class="language-text">python -m unittest discover -s tests -p test_redmine_notifier.py -v
+<pre><code class="language-text">python -m unittest discover -s tests -v
 </code></pre>
-<p>이번 작업에서는 테스트 본문과 구현 연결을 확인했으며 명령을 실제 실행하지 않았다.</p>
+<p>실제 CLI 테스트는 프로그램을 임시 폴더에 복사하고 로컬 HTTP 서버로 조회·전송·실패·중복 제외를 확인한다. 운영 비밀 설정은 읽지 않는다.</p>
 <section class="card kind-test" id="TEST-CORE-001">
 <h3><span class="idtag">TEST-CORE-001</span></h3>
 <p><a class="idref" href="#REQ-CORE-001">REQ-CORE-001</a>의 입력과 결과를 <code>tests/test_redmine_notifier.py</code>의 <code>test_notifications_default_to_off</code> fixture/assertion으로 검증한다. 해당 assertion 실패는 검사 실패다.</p>
@@ -176,15 +346,30 @@ footer{max-width:1280px;margin:0 auto;padding:8px 32px 40px;color:var(--muted);f
 <h3><span class="idtag">TEST-CORE-003</span></h3>
 <p><a class="idref" href="#REQ-CORE-003">REQ-CORE-003</a>의 입력과 결과를 <code>tests/test_redmine_notifier.py</code>의 <code>test_split_blocks_respects_limit</code> fixture/assertion으로 검증한다. 해당 assertion 실패는 검사 실패다.</p>
 </section>
+<section class="card kind-test" id="TEST-OPS-001">
+<h3><span class="idtag">TEST-OPS-001</span> 서버 일정과 실행</h3>
+<p>서버에서 <span class="term" title="Linux의 서비스·예약 실행 관리자" tabindex="0">systemd</span>-analyze verify로 유닛 문법을 확인한다. <span class="term" title="Linux의 서비스·예약 실행 관리자" tabindex="0">systemd</span>-analyze calendar로 한국 시간의 다음 일정을 확인한다. timer 활성 상태, 실제 서비스 종료 결과와 조회·전송 로그를 읽는다. 재부팅 후 확인은 별도로 기록한다.</p>
+</section>
+<section class="card kind-test" id="TEST-OPS-002">
+<h3><span class="idtag">TEST-OPS-002</span> PC 중지 확인</h3>
+<p>관리자 권한으로 PC 중지 스크립트를 실행한다. 백업 XML 인수와 두 작업의 Enabled=false, 실행 프로세스 부재를 확인한다.</p>
+</section>
 </section>
 <section class="chapter" id="sec-12">
 <h2>12. 요구사항 추적성</h2>
-<div class="table-wrap"><table>
+<div class="table-wrap"><table class="responsive">
 <thead><tr><th>Requirement</th><th>Implementation</th><th>Test</th><th>Status</th></tr></thead>
 <tbody>
-<tr><td><a class="idref" href="#REQ-CORE-001">REQ-CORE-001</a></td><td><code>redmine_notifier.py</code></td><td><a class="idref" href="#TEST-CORE-001">TEST-CORE-001</a>: <code>tests/test_redmine_notifier.py</code></td><td><span class="badge st-implemented">implemented</span></td></tr>
-<tr><td><a class="idref" href="#REQ-CORE-002">REQ-CORE-002</a></td><td><code>redmine_notifier.py</code></td><td><a class="idref" href="#TEST-CORE-002">TEST-CORE-002</a>: <code>tests/test_redmine_notifier.py</code></td><td><span class="badge st-implemented">implemented</span></td></tr>
-<tr><td><a class="idref" href="#REQ-CORE-003">REQ-CORE-003</a></td><td><code>redmine_notifier.py</code></td><td><a class="idref" href="#TEST-CORE-003">TEST-CORE-003</a>: <code>tests/test_redmine_notifier.py</code></td><td><span class="badge st-implemented">implemented</span></td></tr>
+<tr><td data-label="Requirement"><a class="idref" href="#REQ-CORE-001">REQ-CORE-001</a></td><td data-label="Implementation"><code>redmine_notifier.py</code></td><td data-label="Test"><a class="idref" href="#TEST-CORE-001">TEST-CORE-001</a>: <code>tests/test_redmine_notifier.py</code></td><td data-label="Status"><span class="badge st-implemented">implemented</span></td></tr>
+<tr><td data-label="Requirement"><a class="idref" href="#REQ-CORE-002">REQ-CORE-002</a></td><td data-label="Implementation"><code>redmine_notifier.py</code></td><td data-label="Test"><a class="idref" href="#TEST-CORE-002">TEST-CORE-002</a>: <code>tests/test_redmine_notifier.py</code></td><td data-label="Status"><span class="badge st-implemented">implemented</span></td></tr>
+<tr><td data-label="Requirement"><a class="idref" href="#REQ-CORE-003">REQ-CORE-003</a></td><td data-label="Implementation"><code>redmine_notifier.py</code></td><td data-label="Test"><a class="idref" href="#TEST-CORE-003">TEST-CORE-003</a>: <code>tests/test_redmine_notifier.py</code></td><td data-label="Status"><span class="badge st-implemented">implemented</span></td></tr>
+<tr><td data-label="Requirement"><a class="idref" href="#REQ-QUERY-001">REQ-QUERY-001</a></td><td data-label="Implementation"><code>redmine_notifier.py</code></td><td data-label="Test"><code>tests/test_cli.py</code></td><td data-label="Status"><span class="badge st-implemented">implemented</span></td></tr>
+<tr><td data-label="Requirement"><a class="idref" href="#REQ-DAILY-001">REQ-DAILY-001</a></td><td data-label="Implementation"><code>redmine_notifier.py</code></td><td data-label="Test"><code>tests/test_cli.py</code></td><td data-label="Status"><span class="badge st-implemented">implemented</span></td></tr>
+<tr><td data-label="Requirement"><a class="idref" href="#REQ-WEEKLY-001">REQ-WEEKLY-001</a></td><td data-label="Implementation"><code>redmine_notifier.py</code></td><td data-label="Test"><code>tests/test_redmine_notifier.py</code>, <code>tests/test_cli.py</code></td><td data-label="Status"><span class="badge st-implemented">implemented</span></td></tr>
+<tr><td data-label="Requirement"><a class="idref" href="#REQ-DELIVERY-001">REQ-DELIVERY-001</a></td><td data-label="Implementation"><code>redmine_notifier.py</code></td><td data-label="Test"><code>tests/test_cli.py</code></td><td data-label="Status"><span class="badge st-implemented">implemented</span></td></tr>
+<tr><td data-label="Requirement"><a class="idref" href="#REQ-OPS-001">REQ-OPS-001</a></td><td data-label="Implementation"><code>scripts/install_server.sh</code>, <code>scripts/run_scheduled.py</code>, <code>deploy/systemd/redmine-notifier@.service</code>, <code>deploy/systemd/redmine-notifier-daily.timer</code>, <code>deploy/systemd/redmine-notifier-weekly.timer</code></td><td data-label="Test"><code>tests/test_scheduled_runner.py</code>, <a class="idref" href="#TEST-OPS-001">TEST-OPS-001</a></td><td data-label="Status"><span class="badge st-implemented">implemented</span></td></tr>
+<tr><td data-label="Requirement"><a class="idref" href="#REQ-OPS-002">REQ-OPS-002</a></td><td data-label="Implementation"><code>scripts/disable_local_tasks.ps1</code></td><td data-label="Test"><a class="idref" href="#TEST-OPS-002">TEST-OPS-002</a></td><td data-label="Status"><span class="badge st-implemented">implemented</span></td></tr>
+<tr><td data-label="Requirement"><a class="idref" href="#NFR-SECURITY-001">NFR-SECURITY-001</a></td><td data-label="Implementation"><code>redmine_notifier.py</code>, <code>scripts/install_server.sh</code>, <code>scripts/set_server_webhook.py</code></td><td data-label="Test"><code>tests/test_cli.py</code>, <code>tests/test_server_webhook.py</code>, <a class="idref" href="#TEST-OPS-001">TEST-OPS-001</a></td><td data-label="Status"><span class="badge st-implemented">implemented</span></td></tr>
 </tbody>
 </table></div>
 <p>implemented는 구현·테스트 소스 연결을 확인했다는 뜻이며 실제 실행 통과를 의미하지 않는다.</p>
@@ -192,8 +377,7 @@ footer{max-width:1280px;margin:0 auto;padding:8px 32px 40px;color:var(--muted);f
 <section class="chapter" id="sec-13">
 <h2>13. 미확정 사항</h2>
 <ul>
-<li>실제 API 페이지 조회·Teams 전송·재시도·상태 저장 전체의 추적성 및 예약 실행 결과는 확인 필요다.</li>
-<li>미확정 범위 검토 전에는 전체 프로젝트 readiness 완료로 보고하지 않는다.</li>
+<li>재부팅 후 자동실행과 다음 예약 실행 결과는 확인 필요다. 실제 전송·수신과 별도로 기록한다.</li>
 </ul>
 </section>
 </main>

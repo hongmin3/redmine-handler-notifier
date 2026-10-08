@@ -1,0 +1,11 @@
+[Unit]
+Description=Redmine weekly reminder at 13:30 Monday Korea time
+
+[Timer]
+OnCalendar=Mon *-*-* 13:30:00 Asia/Seoul
+Persistent=true
+AccuracySec=1s
+Unit=redmine-notifier@weekly.service
+
+[Install]
+WantedBy=timers.target
